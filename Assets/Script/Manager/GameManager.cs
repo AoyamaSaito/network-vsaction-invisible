@@ -10,6 +10,9 @@ using ExitGames.Client.Photon;
 /// </summary>
 public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
+    //「Raise」というOnEventを呼び出す関数を、多数のスクリプト定義する必要が出てきそうなので
+    //GameManager内で引数で指定できるようにしておいた方がよさそう
+
     void IOnEventCallback.OnEvent(EventData photonEvent)
     {
         if (photonEvent.Code == 2)
