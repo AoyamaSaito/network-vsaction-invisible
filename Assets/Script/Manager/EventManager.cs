@@ -86,7 +86,6 @@ public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
         //ƒCƒxƒ“ƒg
         if (photonEvent.Code == 3)
         {
-            //int n = UnityEngine.Random.Range(0, _events.Count - 1);
             Debug.Log(_message);
             _events[0].EventStart();
         }
