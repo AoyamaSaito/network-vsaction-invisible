@@ -14,7 +14,7 @@ public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
     [SerializeField, Tooltip("イベントで送るメッセージ")]
     private string _message = "メッセージ";
     [SerializeField, Tooltip("Eventが入ったフォルダのパス")]
-    private string _path = "Assets/Resorces/Event";
+    private string _path = "Assets\\Resorces\\Event";
     //[SerializeField]
     private List<EventBase> _events;
 
