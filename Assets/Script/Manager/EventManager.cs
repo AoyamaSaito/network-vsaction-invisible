@@ -11,11 +11,11 @@ using System;
 
 public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
-    [SerializeField, Tooltip("イベントで送るメッセージ")] 
+    [SerializeField, Tooltip("イベントで送るメッセージ")]
     private string _message = "メッセージ";
-    [SerializeField, Tooltip("イベントのフォルダパス")]
-    private string _path = "Assets/Script/EventTest.prefabs";
-    [SerializeField]
+    [SerializeField, Tooltip("Eventが入ったフォルダのパス")]
+    private string _path = "Assets/Resorces/Event";
+    //[SerializeField]
     private List<EventBase> _events;
 
     private float _timer = 0;
@@ -29,26 +29,26 @@ public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     private void Init()
     {
-        Debug.Log(_events[0].name);
-        //_events = FindEventsAsset(_path);
+        _events = new List<EventBase>();
+        _events = FindEventsAsset(_path);
     }
 
-    //private List<EventBase> FindEventsAsset(string directoryPath)
-    //{
-    //    List<EventBase> assets = new List<EventBase>();
-    //    var fileNames = Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories);
+    private List<EventBase> FindEventsAsset(string directoryPath)
+    {
+        List<EventBase> assets = new List<EventBase>();
+        var fileNames = Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories);
 
-    //    foreach (var fileName in fileNames)
-    //    {
-    //        var asset = AssetDatabase.LoadAssetAtPath<EventBase>(fileName);
-    //        if (asset != null)
-    //        {
-    //            assets.Add(asset);
-    //        }
-    //    }
+        foreach (var fileName in fileNames)
+        {
+            var asset = AssetDatabase.LoadAssetAtPath<EventBase>(fileName);
+            if (asset != null)
+            {
+                assets.Add(asset);
+            }
+        }
 
-    //    return assets;
-    //}
+        return assets;
+    }
 
     private void Update()
     {
@@ -57,7 +57,6 @@ public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         if(_timer >= _testCount)
         {
-            //Debug.Log("イベント発生");
             Raise();
             _timer = 0;
         }
