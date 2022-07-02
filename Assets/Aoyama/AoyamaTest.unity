@@ -1448,6 +1448,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_message: aaaa
+  _path: Assets/Script/EventTest.prefab
+  _events:
+  - {fileID: 8715867043932977398, guid: 6a7894d242820be4f97ab6d7071f1076, type: 3}
 --- !u!1 &1391329089
 GameObject:
   m_ObjectHideFlags: 0
