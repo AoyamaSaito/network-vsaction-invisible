@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TakaiTestScene : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// ÉQÅ[ÉÄÉVÅ[ÉìÇ…îÚÇ‘ä÷êî
+    /// </summary>
+    public void OnClickEnterGame()
     {
-        
-    }
+        PhotonNetwork.IsMessageQueueRunning = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        SceneManager.LoadSceneAsync("GameScene", LoadSceneMode.Single);
     }
 }
