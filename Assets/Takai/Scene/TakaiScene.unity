@@ -410,6 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45ae8ee47d49c242bb2b46217cd82e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameSceneName: TakaiGameScene
 --- !u!4 &1241124872
 Transform:
   m_ObjectHideFlags: 0

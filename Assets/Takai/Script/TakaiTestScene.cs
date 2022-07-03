@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class TakaiTestScene : MonoBehaviour
 {
+    [Header("GameScene–¼"), Tooltip("GameScene–¼"), SerializeField] string _gameSceneName; 
+
     /// <summary>
     /// ƒQ[ƒ€ƒV[ƒ“‚É”ò‚ÔŠÖ”
     /// </summary>
@@ -12,6 +14,6 @@ public class TakaiTestScene : MonoBehaviour
     {
         PhotonNetwork.IsMessageQueueRunning = false;
 
-        SceneManager.LoadSceneAsync("GameScene", LoadSceneMode.Single);
+        SceneManager.LoadSceneAsync(_gameSceneName, LoadSceneMode.Single);
     }
 }
