@@ -41,7 +41,7 @@ public class PlayerAttack : MonoBehaviour
             _timer = _attackInterval;
             _isAttack = true;
             // 他のクライアントだけにエフェクトを表示する
-            _view.RPC(nameof(SpawnAttackEffect), RpcTarget.Others, null);
+            EffectInstantiate();
         }
     }
 
@@ -58,6 +58,11 @@ public class PlayerAttack : MonoBehaviour
             _attackCollider.gameObject.SetActive(true);
             _isAttack = false;
         }
+    }
+
+    public void EffectInstantiate()
+    {
+        _view.RPC(nameof(SpawnAttackEffect), RpcTarget.Others, null);
     }
 
     [PunRPC]

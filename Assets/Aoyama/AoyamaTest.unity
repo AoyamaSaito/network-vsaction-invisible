@@ -687,7 +687,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: EVENT
+  m_Text: WAVE START
 --- !u!222 &529318287
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1582,9 +1582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1382275729}
   - component: {fileID: 1382275728}
-  - component: {fileID: 1382275730}
   - component: {fileID: 1382275731}
-  - component: {fileID: 1382275732}
   m_Layer: 0
   m_Name: System
   m_TagString: Untagged
@@ -1629,18 +1627,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1382275730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1382275727}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 074d3a06af2a8c146bfbfbb4fbed077e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1382275731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1653,22 +1639,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 750e143aef5a9ad43b184f0def7c946b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uIManager: {fileID: 1382275732}
-  _message: "\u30E1\u30C3\u30BB\u30FC\u30B8"
-  _path: Assets\Resources\Event
---- !u!114 &1382275732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1382275727}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6977d9d099d4742408ae2a056fef41bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _testCount: 4
   _uiPanel: {fileID: 133924808}
+  _path: Assets\Resources\Wave
 --- !u!1 &1391329089
 GameObject:
   m_ObjectHideFlags: 0
