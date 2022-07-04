@@ -111,6 +111,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime ç
         if (actorNumber > PhotonNetwork.CurrentRoom.MaxPlayers - 1)
         {
             Debug.Log("Closing Room");
+            PhotonNetwork.IsMessageQueueRunning = true;
             PhotonNetwork.CurrentRoom.IsOpen = false;
         }
     }
