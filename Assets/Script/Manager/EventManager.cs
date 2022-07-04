@@ -11,6 +11,8 @@ using System;
 
 public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
+    [SerializeField, Tooltip("UIManager")]
+    UIManager _uIManager;
     [SerializeField, Tooltip("イベントで送るメッセージ")]
     private string _message = "メッセージ";
     [SerializeField, Tooltip("Eventが入ったフォルダのパス")]
@@ -19,12 +21,11 @@ public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
     private List<EventBase> _events;
 
     private float _timer = 0;
-    private float _testCount = 2;
+    private float _testCount = 4;
 
     private void Awake()
     {
         Init();
-        //Debug.Log(Array.ForEach(_events, i => i));
     }
 
     private void Init()
@@ -57,7 +58,7 @@ public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         if(_timer >= _testCount)
         {
-            Raise();
+            EventRaise();
             _timer = 0;
         }
     }
@@ -65,7 +66,7 @@ public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
     /// <summary>
     /// イベントを起こす
     /// </summary>
-    public void Raise()
+    public void EventRaise()
     {
         //イベントとして送るものを作る
         byte eventCode = 3; // イベントコード 0~199 まで指定できる。200 以上はシステムで使われているので使えない。
@@ -86,6 +87,7 @@ public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
         if (photonEvent.Code == 3)
         {
             Debug.Log(_message);
+            _uIManager.PlayAnimation();
             _events[0].EventStart();
         }
     }
