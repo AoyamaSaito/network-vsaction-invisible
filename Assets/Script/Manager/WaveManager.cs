@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 using Photon.Pun;   // PhotonNetwork を使うため
 using Photon.Realtime;  // RaiseEventOptions/ReceiverGroup を使うため
@@ -9,19 +10,19 @@ using System.IO;
 using UnityEditor;
 using System;
 
-public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
+public class WaveManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
-    [SerializeField, Tooltip("UIManager")]
-    UIManager _uIManager;
-    [SerializeField, Tooltip("イベントで送るメッセージ")]
-    private string _message = "メッセージ";
+    [SerializeField, Tooltip("Waveを発生させる秒数")] 
+    private float _testCount = 4;
+    [SerializeField, Tooltip("Panelのアニメーター")]
+    private Animator _uiPanel;
     [SerializeField, Tooltip("Eventが入ったフォルダのパス")]
     private string _path = "Assets\\Resorces\\Event";
     //[SerializeField]
-    private List<EventBase> _events;
+    private List<WaveBase> _events;
 
     private float _timer = 0;
-    private float _testCount = 4;
+    private string _message = "メッセージ";
 
     private void Awake()
     {
@@ -30,18 +31,18 @@ public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     private void Init()
     {
-        _events = new List<EventBase>();
+        _events = new List<WaveBase>();
         _events = FindEventsAsset(_path);
     }
 
-    private List<EventBase> FindEventsAsset(string directoryPath)
+    private List<WaveBase> FindEventsAsset(string directoryPath)
     {
-        List<EventBase> assets = new List<EventBase>();
+        List<WaveBase> assets = new List<WaveBase>();
         var fileNames = Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories);
 
         foreach (var fileName in fileNames)
         {
-            var asset = AssetDatabase.LoadAssetAtPath<EventBase>(fileName);
+            var asset = AssetDatabase.LoadAssetAtPath<WaveBase>(fileName);
             if (asset != null)
             {
                 assets.Add(asset);
@@ -87,8 +88,28 @@ public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
         if (photonEvent.Code == 3)
         {
             Debug.Log(_message);
-            _uIManager.PlayAnimation();
-            _events[0].EventStart();
+            int i = UnityEngine.Random.Range(0, _events.Count - 1);
+            PlayWave(_events[i]);
         }
+    }
+
+    public void PlayWave(WaveBase eventBase)
+    {
+        _uiPanel.SetTrigger("Play");
+
+        ObservableStateMachineTrigger trigger =
+            _uiPanel.GetBehaviour<ObservableStateMachineTrigger>();
+
+        IDisposable exitState = trigger
+            .OnStateExitAsObservable()
+            .Subscribe(onStateInfo =>
+            {
+                AnimatorStateInfo info = onStateInfo.StateInfo;
+
+                if (info.IsName("Base Layer.PanelAnimation"))
+                {
+                    eventBase.WaveStart();
+                }
+            }).AddTo(this);
     }
 }
