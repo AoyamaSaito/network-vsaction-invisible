@@ -1639,7 +1639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 750e143aef5a9ad43b184f0def7c946b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testCount: 4
+  _testCount: 3
   _uiPanel: {fileID: 133924808}
   _path: Assets\Resources\Wave
 --- !u!1 &1391329089
