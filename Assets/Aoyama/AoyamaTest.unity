@@ -687,7 +687,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: WAVE START
+  m_Text: WAVE COMING
 --- !u!222 &529318287
 CanvasRenderer:
   m_ObjectHideFlags: 0
