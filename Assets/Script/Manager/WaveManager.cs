@@ -19,8 +19,10 @@ public class WaveManager : MonoBehaviourPunCallbacks, IOnEventCallback
     private float _testCount = 4;
     [SerializeField, Tooltip("Panelのアニメーター")]
     private Animator _uiPanel;
-    [SerializeField, Tooltip("Eventが入ったフォルダのパス")]
-    private string _path = "Assets\\Resorces\\Event";
+    [SerializeField, Tooltip("Waveが入ったフォルダのパス")]
+    private string _wavePath = "Assets\\Resorces\\Event";
+    [SerializeField, Tooltip("Waveが入ったDataを保存するフォルダのパス")]
+    private string _savePath = "Assets\\Resorces\\Event";
 
     private List<WaveBase> _events;
     private float _timer = 0;
@@ -38,15 +40,15 @@ public class WaveManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         _events = new List<WaveBase>();
 #if UNITY_EDITOR
-        _events = FindEventsAsset(_path);
+        _events = FindEventsAsset(_wavePath);
 #endif
     }
 
 #if UNITY_EDITOR
     private List<WaveBase> FindEventsAsset(string directoryPath)
     {
-
-        List<WaveBase> assets = new List<WaveBase>();
+        var obj = ScriptableObject.CreateInstance<WaveData>();
+        //List<WaveBase> assets = new List<WaveBase>();
         var fileNames = Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories);
 
         foreach (var fileName in fileNames)
@@ -54,11 +56,11 @@ public class WaveManager : MonoBehaviourPunCallbacks, IOnEventCallback
             var asset = AssetDatabase.LoadAssetAtPath<WaveBase>(fileName);
             if (asset != null)
             {
-                assets.Add(asset);
+                obj.Waves.Add(asset);
             }
         }
 
-        return assets;
+        return obj.Waves;
     }
 #endif
 
@@ -71,7 +73,6 @@ public class WaveManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         if (_isWave == false)
         {
-            //Debug.Log(_timer);
             _timer += Time.deltaTime;
         }
 
