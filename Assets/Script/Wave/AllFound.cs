@@ -14,7 +14,13 @@ public class AllFound : WaveBase
 
     public override void WaveStart()
     {
-        Debug.Log("ƒCƒxƒ“ƒg”­¶");
+        Debug.Log("AllFound”­¶");
+        var i = Instantiate(this);
+        i.EffectAllInstantiate();
+    }
+
+    private void EffectAllInstantiate()
+    {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         GameObject me = players?.Where(x => x.GetPhotonView().IsMine).FirstOrDefault();
         PhotonView view = me.GetPhotonView();
@@ -29,5 +35,6 @@ public class AllFound : WaveBase
             yield return new WaitForSeconds(0.5f);
             playerAttack.EffectInstantiate();
         }
+        Destroy(this);
     }
 }
