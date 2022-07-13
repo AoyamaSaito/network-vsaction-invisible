@@ -8,7 +8,7 @@ using Photon.Realtime;  // RaiseEventOptions/ReceiverGroup を使うため
 using ExitGames.Client.Photon;  // SendOptions を使うため
 using System;
 
-public class WaveManager : MonoBehaviourPunCallbacks, IOnEventCallback
+public class WaveManager : MonoBehaviourPunCallbacks
 {
     [SerializeField, Tooltip("Waveを発生させる秒数")]
     private float _testCount = 4;
@@ -21,13 +21,14 @@ public class WaveManager : MonoBehaviourPunCallbacks, IOnEventCallback
     private string _message = "メッセージ";
     private bool _isWave = false;
 
-    private void Awake()
+    private void Start()
     {
         Init();
     }
 
     private void Init()
     {
+        GameManager.Instance.OnEventGameManager += OnWaveEvent;
         _isWave = false;
     }
 
@@ -70,16 +71,16 @@ public class WaveManager : MonoBehaviourPunCallbacks, IOnEventCallback
     }
 
     /// <summary>
-    /// 
+    /// Waveを発生させるイベント
     /// </summary>
     /// <param name="photonEvent"></param>
-    void IOnEventCallback.OnEvent(EventData photonEvent)
+    private void OnWaveEvent(EventData photonEvent)
     {
-        Debug.Log("OnEvent");
         //イベント
         if (photonEvent.Code == 3)
         {
-            int i = UnityEngine.Random.Range(0, _waveData.Waves.Count - 1);
+            Debug.Log("OnWave");
+            int i = UnityEngine.Random.Range(0, _waveData.Waves.Count);
             Debug.Log(_waveData.Waves[i].name);
             PlayWave(_waveData.Waves[i]);
         }
