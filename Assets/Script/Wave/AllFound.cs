@@ -10,7 +10,7 @@ using UnityEngine;
 public class AllFound : WaveBase
 {
     [SerializeField, Tooltip("タイマー")]
-    float _count = 5;
+    float _count = 1;
 
     public override void WaveStart()
     {
@@ -29,12 +29,13 @@ public class AllFound : WaveBase
 
     IEnumerator AllFoundCor(PlayerAttack playerAttack)
     {
-        float timer = 0;
-        while(timer <= _count)
+        int count = 0;
+        while(count <= 5)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
             playerAttack.EffectInstantiate();
+            count++;
         }
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 }
