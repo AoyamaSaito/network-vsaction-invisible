@@ -82,14 +82,14 @@ Shader "Custom/Ripple" {
                     float alpha = 1;
                     if (_isAlpha == 1)
                     {
-                        alpha = clamp((_Width - dis) * 3, 0.1, 1.5);
+                        //alpha = clamp((_Width - dis) * 3, 0.1, 1.5);
                     }
 
                     fixed3 shiftColor = color;
                     if (_isColorShift == 1)
                     {
-                        half3 shift = half3(_Time.w * 10, 1, 1);
-                        shiftColor = shift_col(color, shift);
+                        //half3 shift = half3(_Time.w * 10, 1, 1);
+                        //shiftColor = shift_col(color, shift);
                     }
 
                     return fixed4(shiftColor, color.a * alpha);

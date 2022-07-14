@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 425d1f35bcfd4604e90eadf5ff45a0a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackEffectPrefab: {fileID: 3609888982072754779, guid: efeac88bcc129f644b966e7b0c455bf8, type: 3}
+  _attackEffectPrefab: {fileID: 6988402356373875131, guid: b551a32a53921164081f7b06fb208ea6, type: 3}
   _attackCollider: {fileID: 1477414717835052374}
   _attackInterval: 5
 --- !u!114 &3214866853739231551

@@ -62,7 +62,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void EffectInstantiate()
     {
-        _view.RPC(nameof(SpawnAttackEffect), RpcTarget.Others, null);
+        _view.RPC(nameof(SpawnAttackEffect), RpcTarget.All, null);
     }
 
     [PunRPC]
