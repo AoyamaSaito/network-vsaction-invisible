@@ -11,8 +11,10 @@ using Photon.Realtime;
 [RequireComponent(typeof(PhotonView))]
 public class PlayerAttack : MonoBehaviour
 {
-    /// <summary>攻撃エフェクト（他のクライアントのみに表示する）</summary>
+    /// <summary>攻撃エフェクト</summary>
     [SerializeField] GameObject _attackEffectPrefab;
+    /// <summary>エフェクト単体</summary>
+    [SerializeField] GameObject _effectPrefab;
     /// <summary>攻撃範囲</summary>
     [SerializeField] Collider2D _attackCollider;
     /// <summary>攻撃のクールタイム</summary>
@@ -40,8 +42,7 @@ public class PlayerAttack : MonoBehaviour
         {
             _timer = _attackInterval;
             _isAttack = true;
-            // 他のクライアントだけにエフェクトを表示する
-            EffectInstantiate();
+            AttackEffectInstantiate();
         }
     }
 
@@ -61,6 +62,17 @@ public class PlayerAttack : MonoBehaviour
     }
 
     public void EffectInstantiate()
+    {
+        _view.RPC(nameof(SpawnEffect), RpcTarget.All, null);
+    }
+
+    [PunRPC]
+    private void SpawnEffect()
+    {
+        Instantiate(_effectPrefab, transform.position, Quaternion.identity);
+    }
+
+    public void AttackEffectInstantiate()
     {
         _view.RPC(nameof(SpawnAttackEffect), RpcTarget.All, null);
     }

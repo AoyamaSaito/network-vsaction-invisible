@@ -107,7 +107,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: feee1711a7044a841a59f11d905ac8df, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -154,7 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 425d1f35bcfd4604e90eadf5ff45a0a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackEffectPrefab: {fileID: 2462568877715379020, guid: b2a625244107791419e9ef25a939730a, type: 3}
+  _attackEffectPrefab: {fileID: 2462568877715379020, guid: f3035e570c9d90e45ad6efe9acd41a00, type: 3}
+  _effectPrefab: {fileID: 2462568877715379020, guid: b2a625244107791419e9ef25a939730a, type: 3}
   _attackCollider: {fileID: 1477414717835052374}
   _attackInterval: 5
 --- !u!114 &3214866853739231551
@@ -221,8 +222,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8736622684878351857}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 5.41, y: 9.34, z: 0}
+  m_LocalScale: {x: 1.5127, y: 1.5127, z: 1.5127}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3214866853739231549}
