@@ -49,6 +49,7 @@ public class WaveManager : MonoBehaviourPunCallbacks
         {
             EventRaise();
             _isWave = true;
+            _testCount = UnityEngine.Random.Range(8, 16);
             _timer = 0;
         }
     }
