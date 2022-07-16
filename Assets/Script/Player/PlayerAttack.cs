@@ -90,7 +90,7 @@ public class PlayerAttack : MonoBehaviour
             print("Attacked");
             // 相手の ActorNumber を取得する
             PhotonView otherView = collision.gameObject.GetPhotonView();
-            int otherActorNumber = otherView.OwnerActorNr;
+            int otherActorNumber = otherView.OwnerActorNr; 
             print($"Attacked {otherActorNumber}");
             // 相手を倒したことを通知する(Kill のイベントコードは2)
             RaiseEventOptions target = new RaiseEventOptions();
