@@ -4,6 +4,8 @@ using UnityEngine;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Linq;
+using System;
 
 /// <summary>
 /// プレイヤーの攻撃を制御するコンポーネント
@@ -61,6 +63,13 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    //private void GetCollider(ContactFilter2D colFilter, Collider2D[] result = null)
+    //{
+    //    result = new Collider2D[5];
+    //    _attackCollider.OverlapCollider(colFilter, result);
+    //    Array.ForEach(result, x => x.TryGetComponent<PhotonView>(out PhotonView otherView));
+    //}
+
     public void EffectInstantiate()
     {
         _view.RPC(nameof(SpawnEffect), RpcTarget.All, null);
@@ -85,11 +94,11 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_view.IsMine && collision.tag == "Player")
+        if (_view.IsMine && collision.gameObject.TryGetComponent<PhotonView>(out PhotonView otherView))
         {
             print("Attacked");
             // 相手の ActorNumber を取得する
-            PhotonView otherView = collision.gameObject.GetPhotonView();
+            //otherView = collision.gameObject.GetPhotonView();
             int otherActorNumber = otherView.OwnerActorNr; 
             print($"Attacked {otherActorNumber}");
             // 相手を倒したことを通知する(Kill のイベントコードは2)
