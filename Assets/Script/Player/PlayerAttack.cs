@@ -78,7 +78,10 @@ public class PlayerAttack : MonoBehaviour
     [PunRPC]
     private void SpawnEffect()
     {
-        Instantiate(_effectPrefab, transform.position, Quaternion.identity);
+        if(_effectPrefab)
+        {
+            Instantiate(_effectPrefab, transform.position, Quaternion.identity);
+        }
     }
 
     public void AttackEffectInstantiate()
@@ -89,7 +92,10 @@ public class PlayerAttack : MonoBehaviour
     [PunRPC]
     private void SpawnAttackEffect()
     {
-        Instantiate(_attackEffectPrefab, transform.position, Quaternion.identity);
+        if(_attackEffectPrefab)
+        {
+            Instantiate(_attackEffectPrefab, transform.position, Quaternion.identity);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
