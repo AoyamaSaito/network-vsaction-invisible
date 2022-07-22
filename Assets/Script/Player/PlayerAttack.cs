@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
 using System;
+using UniRx;
 
 /// <summary>
 /// プレイヤーの攻撃を制御するコンポーネント
@@ -13,36 +14,57 @@ using System;
 [RequireComponent(typeof(PhotonView))]
 public class PlayerAttack : MonoBehaviour
 {
-    /// <summary>攻撃エフェクト</summary>
-    [SerializeField] GameObject _attackEffectPrefab;
-    /// <summary>エフェクト単体</summary>
-    [SerializeField] GameObject _effectPrefab;
-    /// <summary>攻撃範囲</summary>
-    [SerializeField] Collider2D _attackCollider;
-    /// <summary>攻撃のクールタイム</summary>
-    [SerializeField] float _attackInterval = 5f;
-    PhotonView _view;
-    float _timer;
+    [SerializeField, Tooltip("攻撃エフェクト")]
+    GameObject _attackEffectPrefab;
+    [SerializeField, Tooltip("エフェクト単体")]
+    GameObject _effectPrefab;
+    [SerializeField, Tooltip("攻撃範囲")]
+    Collider2D _attackCollider;
+    [SerializeField, Tooltip("攻撃のクールタイム")] 
+    float _attackInterval = 5f;
+    [SerializeField, Tooltip("攻撃ゲージを管理するクラス")] 
+    AttackGauge _attackGauge;
+
+    private PhotonView _view;
+    private float _timer;
     /// <summary>攻撃中フラグ</summary>
     bool _isAttack = false;
 
     private void Start()
     {
+        Init();
+    }
+
+    private void Init()
+    {
         _view = gameObject.GetPhotonView();
+
+        if (!_view.IsMine) return;
     }
 
     private void Update()
     {
         if (!_view.IsMine) return;
 
-        if (_timer > 0)
+        Attack();
+    }
+
+    private float ratio = 0;
+    public void Attack()
+    {
+        //攻撃ゲージ周り
+        ratio = Mathf.Min(1, _timer / _attackInterval);
+        _attackGauge?.SetValue(ratio);
+
+
+        if (_timer <= _attackInterval)
         {
-            _timer -= Time.deltaTime;
+            _timer += Time.deltaTime;
         }
 
-        if (Input.GetButtonDown("Fire1") && _timer <= 0)
+        if (Input.GetButtonDown("Fire1") && _timer >= _attackInterval)
         {
-            _timer = _attackInterval;
+            _timer = 0;
             _isAttack = true;
             AttackEffectInstantiate();
         }
@@ -62,13 +84,6 @@ public class PlayerAttack : MonoBehaviour
             _isAttack = false;
         }
     }
-
-    //private void GetCollider(ContactFilter2D colFilter, Collider2D[] result = null)
-    //{
-    //    result = new Collider2D[5];
-    //    _attackCollider.OverlapCollider(colFilter, result);
-    //    Array.ForEach(result, x => x.TryGetComponent<PhotonView>(out PhotonView otherView));
-    //}
 
     public void EffectInstantiate()
     {
@@ -104,7 +119,6 @@ public class PlayerAttack : MonoBehaviour
         {
             print("Attacked");
             // 相手の ActorNumber を取得する
-            //otherView = collision.gameObject.GetPhotonView();
             int otherActorNumber = otherView.OwnerActorNr; 
             print($"Attacked {otherActorNumber}");
             // 相手を倒したことを通知する(Kill のイベントコードは2)

@@ -160,6 +160,7 @@ MonoBehaviour:
   _effectPrefab: {fileID: 2462568877715379020, guid: b2a625244107791419e9ef25a939730a, type: 3}
   _attackCollider: {fileID: 1477414717835052374}
   _attackInterval: 5
+  _attackGauge: {fileID: 1746891488655415999}
 --- !u!114 &3214866853739231551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,8 +329,9 @@ GameObject:
   - component: {fileID: 3760025958500946105}
   - component: {fileID: 8305376240365217661}
   - component: {fileID: 1316605356422605041}
+  - component: {fileID: 1746891488655415999}
   m_Layer: 5
-  m_Name: Image
+  m_Name: AttackGauge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -388,11 +390,24 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1746891488655415999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5257174782554241929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36263ab0e0781eb44a7991fc8f15edb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _image: {fileID: 1316605356422605041}
 --- !u!1 &8736622684878351857
 GameObject:
   m_ObjectHideFlags: 0
