@@ -1,0 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// çUåÇÉQÅ[ÉWÇÃinterface
+/// </summary>
+interface IGauge
+{
+    float Ratio { get; }
+    void Gauge();
+}

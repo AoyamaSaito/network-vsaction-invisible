@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _sprite = GetComponent<SpriteRenderer>();
 
+        GameManager.Instance?.SetPlayer(gameObject);
+
         // 他のプレイヤーからは見えなくする
         if (!_view.IsMine)
         {
