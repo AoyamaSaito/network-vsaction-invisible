@@ -56,13 +56,15 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             // やられたのが自分だったら自分を消す
             if (killedPlayerActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
             {
-                PhotonView view = mePlayer.GetPhotonView();
+                GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+                GameObject me = players.Where(x => x.GetPhotonView().IsMine).FirstOrDefault();
+                PhotonView view = me.GetPhotonView();
                 PhotonNetwork.Destroy(view);
             }
         }
     }
 
-    GameObject mePlayer;
-    public GameObject MePlayer => mePlayer;
-    public void SetPlayer(GameObject go) { mePlayer = go; }
+    //GameObject mePlayer;
+    //public GameObject MePlayer => mePlayer;
+    //public void SetPlayer(GameObject go) { mePlayer = go; }
 }
