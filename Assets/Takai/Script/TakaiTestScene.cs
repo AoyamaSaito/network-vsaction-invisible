@@ -16,4 +16,9 @@ public class TakaiTestScene : MonoBehaviour
 
         SceneManager.LoadSceneAsync(_gameSceneName, LoadSceneMode.Single);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        OnClickEnterGame();
+    }
 }
