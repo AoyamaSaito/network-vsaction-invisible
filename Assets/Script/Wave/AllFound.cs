@@ -33,7 +33,7 @@ public class AllFound : WaveBase
         while(count <= 5)
         {
             yield return new WaitForSeconds(0.2f);
-            playerAttack.EffectInstantiate();
+            playerAttack?.EffectInstantiate();
             count++;
         }
         Destroy(this.gameObject);
