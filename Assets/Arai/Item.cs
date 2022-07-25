@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
 public class Item : MonoBehaviour
 {
@@ -14,6 +16,20 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log($"{collision.gameObject.name}GetItem!");
+        if (_view.IsMine && collision.gameObject.TryGetComponent<PhotonView>(out PhotonView otherView))
+        {
+            int otherActorNumber = otherView.OwnerActorNr;
+            print($"GetItem {otherActorNumber}");
+            RaiseEventOptions target = new RaiseEventOptions();
+            target.Receivers = ReceiverGroup.All;
+            SendOptions sendOptions = new SendOptions();
+            PhotonNetwork.RaiseEvent(3, otherActorNumber, target, sendOptions);
+        }
+    }
+
+    [PunRPC]
+    void Action()
+    {
+
     }
 }
