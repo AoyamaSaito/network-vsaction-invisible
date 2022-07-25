@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             {
                 GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
                 GameObject me = players.Where(x => x.GetPhotonView().IsMine).FirstOrDefault();
+                me.GetComponent<PlayerAttack>().DeathEffectInstantiate();
                 PhotonView view = me.GetPhotonView();
                 PhotonNetwork.Destroy(view);
             }

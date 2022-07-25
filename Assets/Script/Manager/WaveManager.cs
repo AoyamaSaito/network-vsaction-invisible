@@ -35,6 +35,8 @@ public class WaveManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
+        if (PhotonNetwork.LocalPlayer.ActorNumber != 1) return;
+
         TestWaveTimer();
     }
 
