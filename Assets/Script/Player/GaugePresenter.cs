@@ -24,12 +24,12 @@ public class GaugePresenter : MonoBehaviour
 
     private void Update()
     {
-        //©•ª‚ÌPlayer‚ª¶¬‚³‚ê‚é‚Ì‚ğ‘Ò‚Â
-        if(_init! && GameManager.Instance.MePlayer != null)
-        {
-            _gauge = GameManager.Instance.MePlayer.GetComponent<IGauge>();
-            _init = true;
-        }
+        ////©•ª‚ÌPlayer‚ª¶¬‚³‚ê‚é‚Ì‚ğ‘Ò‚Â
+        //if(_init! && GameManager.Instance.MePlayer != null)
+        //{
+        //    _gauge = GameManager.Instance.MePlayer.GetComponent<IGauge>();
+        //    _init = true;
+        //}
 
         if(_gauge != null)
         {
