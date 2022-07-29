@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public event Action<EventData> OnEventGameManager;
 
+    public event Action OnPlayerDeath;
+
     private void Start()
     {
         //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -61,6 +63,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 me.GetComponent<PlayerAttack>().DeathEffectInstantiate();
                 PhotonView view = me.GetPhotonView();
                 PhotonNetwork.Destroy(view);
+
+                OnPlayerDeath();
             }
         }
     }
