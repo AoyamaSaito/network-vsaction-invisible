@@ -14,10 +14,14 @@ using UniRx;
 [RequireComponent(typeof(PhotonView))]
 public class PlayerAttack : MonoBehaviour
 {
+    [Header("エフェクト")]
     [SerializeField, Tooltip("攻撃エフェクト")]
     GameObject _attackEffectPrefab;
     [SerializeField, Tooltip("エフェクト単体")]
     GameObject _effectPrefab;
+    [SerializeField, Tooltip("死亡時のエフェクト")]
+    GameObject _deathPrefab;
+    [Header("攻撃関係")]
     [SerializeField, Tooltip("攻撃範囲")]
     Collider2D _attackCollider;
     [SerializeField, Tooltip("攻撃のクールタイム")] 
@@ -113,9 +117,23 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    public void DeathEffectInstantiate()
+    {
+        _view.RPC(nameof(SpawnDeathEffect), RpcTarget.All, null);
+    }
+
+    [PunRPC]
+    private void SpawnDeathEffect()
+    {
+        if (_deathPrefab)
+        {
+            Instantiate(_deathPrefab, transform.position, Quaternion.identity);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_view.IsMine && collision.gameObject.TryGetComponent<PhotonView>(out PhotonView otherView))
+        if (_view.IsMine && collision.tag == "Player" && collision.gameObject.TryGetComponent<PhotonView>(out PhotonView otherView))
         {
             print("Attacked");
             // 相手の ActorNumber を取得する

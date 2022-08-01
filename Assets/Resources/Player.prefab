@@ -158,6 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackEffectPrefab: {fileID: 2462568877715379020, guid: f3035e570c9d90e45ad6efe9acd41a00, type: 3}
   _effectPrefab: {fileID: 2462568877715379020, guid: b2a625244107791419e9ef25a939730a, type: 3}
+  _deathPrefab: {fileID: 3814616046987942818, guid: 74f9ff3d0c0d1b64aa858075f1d47d9c, type: 3}
   _attackCollider: {fileID: 1477414717835052374}
   _attackInterval: 5
   _attackGauge: {fileID: 1746891488655415999}

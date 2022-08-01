@@ -23,8 +23,8 @@ public class AllFound : WaveBase
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         GameObject me = players?.Where(x => x.GetPhotonView().IsMine).FirstOrDefault();
-        PhotonView view = me.GetPhotonView();
-        StartCoroutine(AllFoundCor(view.GetComponent<PlayerAttack>()));
+        PhotonView view = me?.GetPhotonView();
+        StartCoroutine(AllFoundCor(view?.GetComponent<PlayerAttack>()));
     }
 
     IEnumerator AllFoundCor(PlayerAttack playerAttack)

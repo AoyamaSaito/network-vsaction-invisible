@@ -35,6 +35,8 @@ public class WaveManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
+        if (PhotonNetwork.LocalPlayer.ActorNumber != 1) return;
+
         TestWaveTimer();
     }
 
@@ -49,7 +51,7 @@ public class WaveManager : MonoBehaviourPunCallbacks
         {
             EventRaise();
             _isWave = true;
-            _testCount = UnityEngine.Random.Range(8, 16);
+            _testCount = UnityEngine.Random.Range(8, 10);
             _timer = 0;
         }
     }
