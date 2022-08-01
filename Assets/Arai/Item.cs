@@ -12,6 +12,7 @@ public class Item : MonoBehaviour
     void Start()
     {
         _view = gameObject.GetPhotonView();
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -27,9 +28,15 @@ public class Item : MonoBehaviour
         }
     }
 
+    public void DestroyItem()
+    {
+        _view.RPC(nameof(Action),RpcTarget.All,RpcTarget.All);
+    }
+
     [PunRPC]
     void Action()
     {
-
+        Debug.Log("ƒAƒCƒeƒ€‚ªŽæ‚ç‚ê‚½");
+        PhotonNetwork.Destroy(_view);
     }
 }
