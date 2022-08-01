@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
@@ -15,13 +16,34 @@ public class StageEditor : EditorWindow
         window.minSize = new Vector2(320, 320);
     }
 
+    private void OnGUI()
+    {
+        using (new GUILayout.HorizontalScope(GUI.skin.box))
+        {
+            if (GUILayout.Button("çÏê¨"))
+            {
+                Create();
+            }
+            if (GUILayout.Button("ï€ë∂"))
+            {
+                Save();
+            }
+        }
+    }
+
     private void Create()
     {
-
+        //çÏê¨ópÇÃÉVÅ[ÉìÇçÏê¨
+        var newScene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects);
+        newScene.name = "NewScene";
+        EditorSceneManager.SaveScene(newScene, "Assets\\Editor\\StageEditor\\CreateScene\\NewScene.unity", true);
     }
 
     private void Save()
     {
+        if (SceneManager.GetActiveScene().name != "NewScene") return;
+
+        Debug.Log("ï€ë∂ÇµÇ‹ÇµÇΩ");
 
     }
 }
