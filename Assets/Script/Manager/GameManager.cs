@@ -63,8 +63,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 me.GetComponent<PlayerAttack>().DeathEffectInstantiate();
                 PhotonView view = me.GetPhotonView();
                 PhotonNetwork.Destroy(view);
-
-                OnPlayerDeath();
             }
         }
     }

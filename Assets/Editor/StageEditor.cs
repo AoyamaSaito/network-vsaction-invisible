@@ -18,25 +18,41 @@ public class StageEditor : EditorWindow
 
     private void OnGUI()
     {
-        using (new GUILayout.HorizontalScope(GUI.skin.box))
+        Color defaultColor = GUI.backgroundColor;
+        using (new GUILayout.VerticalScope(EditorStyles.helpBox))
         {
-            if (GUILayout.Button("作成"))
+            GUI.backgroundColor = Color.gray;
+            using (new GUILayout.HorizontalScope(EditorStyles.toolbar))
             {
-                Create();
+                GUILayout.Label("ステージ作成");
             }
-            if (GUILayout.Button("保存"))
+            GUI.backgroundColor = defaultColor;
+            using (new GUILayout.HorizontalScope(GUI.skin.box))
             {
-                Save();
+                GUI.backgroundColor = Color.gray;
+                
+                if (GUILayout.Button("作成"))
+                {
+                    Create();
+                }
+                if (GUILayout.Button("保存"))
+                {
+                    Save();
+                }
             }
         }
     }
 
+    private GameObject _stage;
     private void Create()
     {
-        //作成用のシーンを作成
+        //作業用のシーンを作成
         var newScene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects);
         newScene.name = "NewScene";
         EditorSceneManager.SaveScene(newScene, "Assets\\Editor\\StageEditor\\CreateScene\\NewScene.unity", true);
+        //Stageを作成
+        _stage = AssetDatabase.LoadAssetAtPath<GameObject>("Assets\\Editor\\StageEditor\\StagePlane\\StagePlane.prefab");
+        UnityEditor.PrefabUtility.InstantiatePrefab(_stage);
     }
 
     private void Save()
