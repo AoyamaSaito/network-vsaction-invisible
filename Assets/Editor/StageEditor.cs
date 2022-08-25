@@ -60,6 +60,10 @@ public class StageEditor : EditorWindow
         if (SceneManager.GetActiveScene().name != "NewScene") return;
 
         Debug.Log("•Û‘¶‚µ‚Ü‚µ‚½");
+    }
 
+    private void AddStage()
+    {
+        //StagePool‚É’Ç‰Á‚·‚é
     }
 }
