@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scene/GameScene.unity
     guid: 58a12737e9b6a1443b2195f4193b471b
   - enabled: 1
-    path: Assets/Aoyama/AoyamaTest.unity
+    path: Assets/Aoyama/AoyamaTest/AoyamaTest.unity
     guid: 25e180fbdfd8ab242961fb8002b89462
   m_configObjects: {}

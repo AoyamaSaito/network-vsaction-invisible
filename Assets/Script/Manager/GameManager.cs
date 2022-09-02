@@ -11,7 +11,6 @@ using System;
 /// </summary>
 public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
-    //Mono継承しなきゃだめ？
     //「Raise」というOnEventを呼び出す関数を、多数のスクリプト定義する必要が出てきそうなので
     //GameManager内で引数で指定できるようにしておいた方がよさそう
 
@@ -59,10 +58,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             if (killedPlayerActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
             {
                 GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+                Array.ForEach(players, p => p.GetComponent<PlayerController>().PlayerView.Show());
                 GameObject me = players.Where(x => x.GetPhotonView().IsMine).FirstOrDefault();
-                me.GetComponent<PlayerAttack>().DeathEffectInstantiate();
-                PhotonView view = me.GetPhotonView();
-                PhotonNetwork.Destroy(view);
+                me.GetComponent<PlayerController>().Death();
             }
         }
     }
