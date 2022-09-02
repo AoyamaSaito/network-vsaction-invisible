@@ -13,7 +13,7 @@ public class StageEditor : EditorWindow
         // 生成
         StageEditor window = GetWindow<StageEditor>("StageEditor");
         // 最小サイズ設定
-        window.minSize = new Vector2(320, 320);
+        window.minSize = new Vector2(640, 640);
     }
 
     private void OnGUI()
@@ -26,16 +26,19 @@ public class StageEditor : EditorWindow
             {
                 GUILayout.Label("ステージ作成");
             }
+
+            GUILayout.TextArea("Assets\\Editor\\StageEditor\\CreateScene\\NewScene.unity");
+
             GUI.backgroundColor = defaultColor;
             using (new GUILayout.HorizontalScope(GUI.skin.box))
             {
                 GUI.backgroundColor = Color.gray;
                 
-                if (GUILayout.Button("作成"))
+                if (GUILayout.Button("作成用のシーンを開く"))
                 {
                     Create();
                 }
-                if (GUILayout.Button("保存"))
+                if (GUILayout.Button("ステージを保存する"))
                 {
                     Save();
                 }
