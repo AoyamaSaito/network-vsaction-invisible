@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     //「Raise」というOnEventを呼び出す関数を、多数のスクリプト定義する必要が出てきそうなので
     //GameManager内で引数で指定できるようにしておいた方がよさそう
 
+    [SerializeField] UIManager uiManager;
+    [SerializeField] bool _deathTest = false;
+
     #region　 Singleton
     private static GameManager instance;
     public static GameManager Instance => instance;
@@ -36,10 +39,19 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public event Action OnPlayerDeath;
 
-    private void Start()
+    private void Update()
     {
-        //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        //mePlayer = players.Where(x => x.GetPhotonView().IsMine).FirstOrDefault();
+        if(_deathTest)
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            Array.ForEach(players, p => p.GetComponent<PlayerController>().PlayerView.Show());
+            GameObject me = players.Where(x => x.GetPhotonView().IsMine).FirstOrDefault();
+            me.GetComponent<PlayerController>().Death();
+
+            uiManager?.PlayerDefeat();
+
+            _deathTest = false;
+        }
     }
 
     void IOnEventCallback.OnEvent(EventData photonEvent)
@@ -51,18 +63,35 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         if (photonEvent.Code == 2)
         {
-            int killedPlayerActorNumber = (int)photonEvent.CustomData;
-            print($"Player {photonEvent.Sender} killed Player {killedPlayerActorNumber}");
+            KillPlayer(photonEvent);
+        }
+    }
 
-            // やられたのが自分だったら自分を消す
-            if (killedPlayerActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+    private void KillPlayer(EventData photonEvent)
+    {
+        int killedPlayerActorNumber = (int)photonEvent.CustomData;
+        print($"Player {photonEvent.Sender} killed Player {killedPlayerActorNumber}");
+
+        // やられたのが自分だったら自分を消す、周りのプレイヤーを表示する
+        if (killedPlayerActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            Array.ForEach(players, p => p.GetComponent<PlayerController>().PlayerView.Show());
+            GameObject me = players.Where(x => x.GetPhotonView().IsMine).FirstOrDefault();
+            me.GetComponent<PlayerController>().Death();
+
+            uiManager?.PlayerDefeat();
+
+            if(players.Length <= 2)
             {
-                GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-                Array.ForEach(players, p => p.GetComponent<PlayerController>().PlayerView.Show());
-                GameObject me = players.Where(x => x.GetPhotonView().IsMine).FirstOrDefault();
-                me.GetComponent<PlayerController>().Death();
+                Finish(GameObject.FindGameObjectWithTag("Player").GetPhotonView().OwnerActorNr);
             }
         }
+    }
+
+    private void Finish(int playerNumber)
+    {
+        uiManager?.Finish(playerNumber);
     }
 
     //GameObject mePlayer;

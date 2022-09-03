@@ -11,6 +11,7 @@ public class PlayerView : MonoBehaviour
     private void Start()
     {
         _view = gameObject.GetPhotonView();
+        _sprite = GetComponent<SpriteRenderer>();
 
         // ‘¼‚ÌƒvƒŒƒCƒ„[‚©‚ç‚ÍŒ©‚¦‚È‚­‚·‚é
         if (!_view.IsMine)
