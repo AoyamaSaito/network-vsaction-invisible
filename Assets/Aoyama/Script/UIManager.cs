@@ -2,10 +2,23 @@ using System;
 using UniRx.Triggers;
 using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] Animator _uiPanel;
+    [SerializeField] 
+    private Text _defeatText;
+    [SerializeField]
+    private Text _finishText;
+    [SerializeField] 
+    private Animator _uiPanel;
+
+    private void Start()
+    {
+        _defeatText.enabled = false;
+    }
 
     public void PlayEvent(WaveBase eventBase)
     {
@@ -25,5 +38,16 @@ public class UIManager : MonoBehaviour
                     eventBase.WaveStart();
                 }
             }).AddTo(this);
+    }
+
+    public void PlayerDefeat()
+    {
+        _defeatText.enabled = true;
+    }
+
+    public void Finish(int playerNumber)
+    {
+        _finishText.enabled = true;
+        _finishText.text = "Player" + playerNumber + " WIN";
     }
 }

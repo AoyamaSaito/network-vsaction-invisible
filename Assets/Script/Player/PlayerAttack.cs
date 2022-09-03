@@ -133,7 +133,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_view.IsMine && collision.tag == "Player" && collision.gameObject.TryGetComponent<PhotonView>(out PhotonView otherView))
+        if (_view.IsMine && collision.tag == "Player" && collision.gameObject.TryGetComponent(out PhotonView otherView))
         {
             print("Attacked");
             // 相手の ActorNumber を取得する
