@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         _defeatText.enabled = false;
+        _finishText.enabled = false;
     }
 
     public void PlayEvent(WaveBase eventBase)
@@ -47,6 +48,7 @@ public class UIManager : MonoBehaviour
 
     public void Finish(int playerNumber)
     {
+        Debug.Log("Finish" + playerNumber);
         _finishText.enabled = true;
         _finishText.text = "Player" + playerNumber + " WIN";
     }
