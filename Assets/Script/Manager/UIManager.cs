@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     private Text _defeatText;
     [SerializeField]
     private Text _finishText;
+    [SerializeField]
+    private GameObject _finishPanel;
     [SerializeField] 
     private Animator _uiPanel;
 
@@ -19,6 +21,7 @@ public class UIManager : MonoBehaviour
     {
         _defeatText.enabled = false;
         _finishText.enabled = false;
+        _finishPanel.SetActive(false);
     }
 
     public void PlayEvent(WaveBase eventBase)
@@ -48,8 +51,8 @@ public class UIManager : MonoBehaviour
 
     public void Finish(int playerNumber)
     {
-        Debug.Log("Finish" + playerNumber);
         _finishText.enabled = true;
         _finishText.text = "Player" + playerNumber + " WIN";
+        _finishPanel.SetActive(true);
     }
 }

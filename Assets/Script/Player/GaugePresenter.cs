@@ -13,13 +13,13 @@ public class GaugePresenter : MonoBehaviour
     [Tooltip("ゲージの値を管理するクラス")]
     IGauge _gauge;
 
-    private bool _init = false;
-    private GameManager _gameManager;
+    //private bool _init = false;
+    //private GameManager _gameManager;
 
     private void Start()
     {
-        _init = true;
-        _gameManager = GameManager.Instance;
+        //_init = true;
+        //_gameManager = GameManager.Instance;
     }
 
     private void Update()

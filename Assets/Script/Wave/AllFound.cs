@@ -14,7 +14,6 @@ public class AllFound : WaveBase
 
     public override void WaveStart()
     {
-        Debug.Log("AllFoundî≠ê∂");
         var i = Instantiate(this);
         i.EffectAllInstantiate();
     }

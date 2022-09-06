@@ -8,20 +8,38 @@ using Photon.Realtime;
 public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime 用のクラスを継承する
 {
     /// <summary>プレイヤーのプレハブの名前</summary>
-    [SerializeField] string _playerPrefabName = "Prefab";
+    [SerializeField] 
+    string _playerPrefabName = "Prefab";
+    [SerializeReference] 
+    ObjectPoolManager _poolManager;
     /// <summary>プレイヤーを生成する場所を示すアンカーのオブジェクト</summary>
     [SerializeField] Transform[] _spawnPositions = default;
+
+    private IPunPrefabPool _punPool;
 
     private void Awake()
     {
         // シーンの自動同期は無効にする（シーン切り替えがない時は意味はない）
-        PhotonNetwork.AutomaticallySyncScene = false;
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     private void Start()
     {
+        Init();
+        _punPool = GetComponent<IPunPrefabPool>();
+    }
+
+    private void Init()
+    {
         // Photon に接続する
         Connect("1.0"); // 1.0 はバージョン番号（同じバージョンを指定したクライアント同士が接続できる）
+    }
+
+    public void ReConnect()
+    {
+        PhotonNetwork.LeaveRoom();
+        //PhotonNetwork.Destroy(_player);
+        Init();
     }
 
     /// <summary>
@@ -90,6 +108,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
         }
     }
 
+    GameObject _player;
     /// <summary>
     /// プレイヤーを生成する
     /// </summary>
@@ -101,7 +120,9 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
         Transform spawnPoint = _spawnPositions[actorNumber - 1];
 
         // プレイヤーを生成し、他のクライアントと同期する
-        GameObject player = PhotonNetwork.Instantiate(_playerPrefabName, spawnPoint.position, spawnPoint.rotation);
+        Debug.Log("Player生成");
+        _player = PhotonNetwork.Instantiate(_playerPrefabName, spawnPoint.position, spawnPoint.rotation);
+        Debug.Log(_player.name);
 
         /* **************************************************
          * ルームに参加している人数が最大に達したら部屋を閉じる（参加を締め切る）

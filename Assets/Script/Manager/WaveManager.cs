@@ -82,9 +82,7 @@ public class WaveManager : MonoBehaviourPunCallbacks
         //ƒCƒxƒ“ƒg
         if (photonEvent.Code == 3)
         {
-            Debug.Log("OnWave");
             int i = UnityEngine.Random.Range(0, _waveData.Waves.Count);
-            Debug.Log(_waveData.Waves[i].name);
             PlayWave(_waveData.Waves[i]);
         }
     }
