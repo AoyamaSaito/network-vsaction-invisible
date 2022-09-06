@@ -345,7 +345,6 @@ Transform:
   m_Father: {fileID: 530300729}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &514138168 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3618054346159838340, guid: 83c6d82f5e7b6414eb346867e3a785c5, type: 3}
   m_PrefabInstance: {fileID: 2414995766125183388}
