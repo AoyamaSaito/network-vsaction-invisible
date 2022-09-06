@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this);
         }
         else
         {
@@ -71,8 +71,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         }
     }
 
-    private void KillPlayer(EventData photonEvent, GameObject[] players = null)
+    private void KillPlayer(EventData photonEvent)
     {
+        GameObject[] players;
+        int length = 0;
         int killedPlayerActorNumber = (int)photonEvent.CustomData;
         print($"Player {photonEvent.Sender} killed Player {killedPlayerActorNumber}");
 
@@ -82,6 +84,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         if (killedPlayerActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
         {
             players = GameObject.FindGameObjectsWithTag("Player");
+            length = players.Length;
             Array.ForEach(players, p => p.GetComponent<PlayerController>().PlayerView.Show());
             GameObject me = players.Where(x => x.GetPhotonView().IsMine).FirstOrDefault();
             me.GetComponent<PlayerController>().Death();
@@ -89,7 +92,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             _uiManager?.PlayerDefeat();
         }
 
-        if (players.Length <= 2)
+        if (length <= 2)
         {
             Finish(GameObject.FindGameObjectWithTag("Player").GetPhotonView().OwnerActorNr);
         }
@@ -99,8 +102,4 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         _uiManager?.Finish(playerNumber);
     }
-
-    //GameObject mePlayer;
-    //public GameObject MePlayer => mePlayer;
-    //public void SetPlayer(GameObject go) { mePlayer = go; }
 }

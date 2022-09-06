@@ -7,36 +7,52 @@ using Photon.Pun;
 [RequireComponent(typeof(Rigidbody2D), typeof(PhotonView), typeof(SpriteRenderer))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float _speed = 5f;
-    [SerializeField] float _jumpSpeed = 5f;
-    PhotonView _view;
-    Rigidbody2D _rb;
-    SpriteRenderer _sprite;
-    bool _isGrounded = false;
+    [SerializeField]
+    private float _speed = 5f;
+    [SerializeField] 
+    private float _jumpSpeed = 5f;
+
+    private PhotonView _view;
+    private Rigidbody2D _rb;
 
     private void Start()
     {
         _view = gameObject.GetPhotonView();
         _rb = GetComponent<Rigidbody2D>();
-        _sprite = GetComponent<SpriteRenderer>();
-
-        //GameManager.Instance?.SetPlayer(gameObject);
     }
 
+    private Vector2 _velo;
+    private bool _isGrounded = false;
     private void Update()
     {
-        if (!_view.IsMine) return;
-        float h = Input.GetAxisRaw("Horizontal");
-        Vector2 velocity = _rb.velocity;
-        velocity.x = _speed * h;
-
-        if (Input.GetButtonDown("Jump") && _isGrounded)
+        if (!_view.IsMine)
         {
-            velocity.y = _jumpSpeed;
-            _isGrounded = false;
+            return;
         }
 
-        _rb.velocity = velocity;
+        Move(Input.GetAxisRaw("Horizontal"));
+
+        if(Input.GetButtonDown("Jump"))
+        {
+            Jump();
+        }
+
+        _rb.velocity = _velo;
+    }
+
+    private void Move(float input)
+    {
+        _velo = _rb.velocity;
+        _velo.x = _speed * input;
+    }
+
+    private void Jump()
+    {
+        if (_isGrounded)
+        {
+            _velo.y = _jumpSpeed;
+            _isGrounded = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

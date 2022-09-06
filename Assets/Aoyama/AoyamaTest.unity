@@ -345,6 +345,17 @@ Transform:
   m_Father: {fileID: 530300729}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &514138168 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3618054346159838340, guid: 83c6d82f5e7b6414eb346867e3a785c5, type: 3}
+  m_PrefabInstance: {fileID: 2414995766125183388}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 457b8eae13c644443a200176dee8e26b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &530300728
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,6 +390,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &783354854 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 783354854, guid: 83c6d82f5e7b6414eb346867e3a785c5, type: 3}
+  m_PrefabInstance: {fileID: 2414995766125183388}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &915305207 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6988402356373875135, guid: b551a32a53921164081f7b06fb208ea6, type: 3}
@@ -593,6 +609,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1886227101}
     m_Modifications:
+    - target: {fileID: -1024575507714901747, guid: 3637fbf6408eb9b4aa3514dc44bccf4a, type: 3}
+      propertyPath: m_SynchronizeVelocity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3214866853739231523, guid: 3637fbf6408eb9b4aa3514dc44bccf4a, type: 3}
       propertyPath: m_Name
       value: Player
@@ -662,6 +682,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 783354856, guid: 83c6d82f5e7b6414eb346867e3a785c5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ReConnect
+      objectReference: {fileID: 0}
     - target: {fileID: 1525176843174845844, guid: 83c6d82f5e7b6414eb346867e3a785c5, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -706,9 +730,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2414995766059550297, guid: 83c6d82f5e7b6414eb346867e3a785c5, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2414995766059550297, guid: 83c6d82f5e7b6414eb346867e3a785c5, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2414995766059550297, guid: 83c6d82f5e7b6414eb346867e3a785c5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 286.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2414995766125183391, guid: 83c6d82f5e7b6414eb346867e3a785c5, type: 3}
+      propertyPath: _finishPanel
+      value: 
+      objectReference: {fileID: 783354854}
+    - target: {fileID: 2414995767494515468, guid: 83c6d82f5e7b6414eb346867e3a785c5, type: 3}
+      propertyPath: _poolManager
+      value: 
+      objectReference: {fileID: 514138168}
     - target: {fileID: 2682214504239724656, guid: 83c6d82f5e7b6414eb346867e3a785c5, type: 3}
       propertyPath: m_Name
       value: StagePlane
+      objectReference: {fileID: 0}
+    - target: {fileID: 7448013932125157070, guid: 83c6d82f5e7b6414eb346867e3a785c5, type: 3}
+      propertyPath: _fadeTime
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83c6d82f5e7b6414eb346867e3a785c5, type: 3}
