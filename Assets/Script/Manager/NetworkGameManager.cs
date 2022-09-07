@@ -10,8 +10,6 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     /// <summary>プレイヤーのプレハブの名前</summary>
     [SerializeField] 
     string _playerPrefabName = "Prefab";
-    [SerializeReference] 
-    ObjectPoolManager _poolManager;
     /// <summary>プレイヤーを生成する場所を示すアンカーのオブジェクト</summary>
     [SerializeField] Transform[] _spawnPositions = default;
 
