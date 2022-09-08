@@ -13,40 +13,44 @@ public class StageEditor : EditorWindow
         // 生成
         StageEditor window = GetWindow<StageEditor>("StageEditor");
         // 最小サイズ設定
-        window.minSize = new Vector2(640, 640);
+        window.minSize = new Vector2(320, 320);
     }
 
+    string _name = "Stage";
     private void OnGUI()
     {
         Color defaultColor = GUI.backgroundColor;
         using (new GUILayout.VerticalScope(EditorStyles.helpBox))
         {
-            GUI.backgroundColor = Color.gray;
-            using (new GUILayout.HorizontalScope(EditorStyles.toolbar))
-            {
-                GUILayout.Label("ステージ作成");
-            }
+            GUI.backgroundColor = Color.white;
 
             GUILayout.TextArea("Assets\\Editor\\StageEditor\\CreateScene\\NewScene.unity");
 
             GUI.backgroundColor = defaultColor;
-            using (new GUILayout.HorizontalScope(GUI.skin.box))
+
+            GUI.backgroundColor = Color.gray;
+
+            if (GUILayout.Button("作成する"))
+            {
+                Create();
+            }
+
+            using (new GUILayout.HorizontalScope(EditorStyles.toolbar))
             {
                 GUI.backgroundColor = Color.gray;
-                
-                if (GUILayout.Button("作成用のシーンを開く"))
-                {
-                    Create();
-                }
-                if (GUILayout.Button("ステージを保存する"))
-                {
-                    Save();
-                }
+                _name = GUILayout.TextField(_name);
+            }
+            if (GUILayout.Button("ステージを保存する"))
+            {
+                Save(_name);
             }
         }
     }
 
-    private GameObject _stage;
+    GameObject _currentstage;
+    /// <summary>
+    /// 作業用のシーンと、ステージのプレーンを作る
+    /// </summary>
     private void Create()
     {
         //作業用のシーンを作成
@@ -54,15 +58,19 @@ public class StageEditor : EditorWindow
         newScene.name = "NewScene";
         EditorSceneManager.SaveScene(newScene, "Assets\\Editor\\StageEditor\\CreateScene\\NewScene.unity", true);
         //Stageを作成
-        _stage = AssetDatabase.LoadAssetAtPath<GameObject>("Assets\\Editor\\StageEditor\\StagePlane\\StagePlane.prefab");
-        UnityEditor.PrefabUtility.InstantiatePrefab(_stage);
+        GameObject stage = AssetDatabase.LoadAssetAtPath<GameObject>("Assets\\Editor\\StageEditor\\StagePlane\\StagePlane.prefab");
+        _currentstage = (GameObject)PrefabUtility.InstantiatePrefab(stage);
     }
 
-    private void Save()
+    /// <summary>
+    /// 現在作業中のステージをプレハブ化する
+    /// </summary>
+    /// <param name="name"></param>
+    private void Save(string name)
     {
-        if (SceneManager.GetActiveScene().name != "NewScene") return;
-
-        Debug.Log("保存しました");
+        _currentstage.gameObject.name = name;
+        PrefabUtility.SaveAsPrefabAsset(_currentstage, $"Assets\\Prefab\\Stage\\{name}.prefab");
+        PrefabUtility.UnloadPrefabContents(_currentstage);
     }
 
     private void AddStage()

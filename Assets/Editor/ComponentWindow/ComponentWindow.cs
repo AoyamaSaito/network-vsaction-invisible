@@ -2,12 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 特定のコンポーネントを一覧表示するエディター拡張
+/// 特定のコンポーネントを一覧表示するWindow
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public abstract class ComponentWindow<T> : EditorWindow where T : Component
@@ -34,12 +33,15 @@ public abstract class ComponentWindow<T> : EditorWindow where T : Component
     {
         using (GUILayout.ScrollViewScope scroll = new GUILayout.ScrollViewScope(_dataScrollPosition, EditorStyles.helpBox, GUILayout.Width(150)))
         {
+            //Windowを更新する
             if (GUILayout.Button("更新", GUILayout.Width(80)))
             {
                 SearchButton();
             }
 
             _dataScrollPosition = scroll.scrollPosition;
+
+            //そのコンポーネントがなかった時は処理を止める
             if (_components == null) return;
 
             GenericMenu menu = new GenericMenu();
@@ -71,6 +73,10 @@ public abstract class ComponentWindow<T> : EditorWindow where T : Component
     {
         using (GUILayout.ScrollViewScope scroll = new GUILayout.ScrollViewScope(_parameterScrollPosition, EditorStyles.helpBox))
         {
+            using (new GUILayout.HorizontalScope(EditorStyles.toolbar))
+            {
+                GUILayout.Label($"{typeof(T).Name}");
+            }
             _parameterScrollPosition = scroll.scrollPosition;
 
             if (_component)
@@ -78,15 +84,24 @@ public abstract class ComponentWindow<T> : EditorWindow where T : Component
                 Editor.CreateEditor(_component).DrawDefaultInspector();
             }
         }
+
+        
     }
 
+    /// <summary>
+    /// HierarchyにあるTを探す
+    /// </summary>
     private void SearchButton()
     {
         _components = MyGameObjectUtility.GetComponentsInActiveScene<T>();
     }
 
-    private void OpenInspector(T button)
+    /// <summary>
+    /// 選択したコンポーネントをInspectorで開く
+    /// </summary>
+    /// <param name="button"></param>
+    private void OpenInspector(T component)
     {
-        Selection.activeGameObject = button.gameObject;
+        Selection.activeGameObject = component.gameObject;
     }
 }
