@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class ButtonWindow : ComponentWindow<Text>
+public class ButtonWindow : ComponentWindow<Button>
 {
     [MenuItem("Editor/ButtonWindow")]
     private static void Create()
