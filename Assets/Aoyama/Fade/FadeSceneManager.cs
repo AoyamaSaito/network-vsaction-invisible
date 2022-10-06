@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class FadeSceneManager : MonoBehaviour
@@ -11,7 +12,9 @@ public class FadeSceneManager : MonoBehaviour
     private float _fadeTime = 1.5f;
     [Header("é©å»éQè∆")]
     [SerializeField]
-    Animator _fadeAnimator;
+    private Animator _fadeAnimator;
+    [SerializeField]
+    private UnityEvent _sceneChangeEvent;
     
 
     private void Start()
@@ -35,8 +38,12 @@ public class FadeSceneManager : MonoBehaviour
     IEnumerator SceneChangeCor(string sceneName, bool isStartFade = false)
     {
         _isStartFade = isStartFade;
-        _fadeAnimator!.Play("FadeIn");
+        _fadeAnimator!.SetTrigger("FadeIn");
         yield return new WaitForSeconds(_fadeTime);
+        if(_sceneChangeEvent != null)
+        {
+            _sceneChangeEvent.Invoke();
+        }
         SceneManager.LoadScene(sceneName);
     }
 }
