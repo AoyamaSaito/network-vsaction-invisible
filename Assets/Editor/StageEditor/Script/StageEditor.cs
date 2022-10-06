@@ -13,7 +13,8 @@ public class StageEditor : EditorWindow
         // ê∂ê¨
         StageEditor window = GetWindow<StageEditor>("StageEditor");
         // ç≈è¨ÉTÉCÉYê›íË
-        window.minSize = new Vector2(320, 320);
+        window.minSize = new Vector2(360, 80);
+        window.maxSize = new Vector2(600, 80);
     }
 
     string _name = "Stage";

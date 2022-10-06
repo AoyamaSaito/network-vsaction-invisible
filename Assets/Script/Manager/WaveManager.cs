@@ -84,6 +84,7 @@ public class WaveManager : MonoBehaviourPunCallbacks
         {
             int i = UnityEngine.Random.Range(0, _waveData.Waves.Count);
             PlayWave(_waveData.Waves[i]);
+            Debug.Log("PlayeWave");
         }
     }
 
