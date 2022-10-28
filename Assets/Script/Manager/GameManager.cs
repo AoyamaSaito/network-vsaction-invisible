@@ -4,6 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using System;
+using UnityEngine.UI;
 
 /// <summary>
 /// ゲームを管理するコンポーネント
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     private UIManager _uiManager;
     [SerializeField]
     private CameraManager _cameraManager;
+    [SerializeField]
+    private Text _playerText;
     [SerializeField] 
     private bool _deathTest = false;
 
@@ -79,11 +82,16 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         print($"Player {photonEvent.Sender} killed Player {killedPlayerActorNumber}");
 
         _cameraManager.ShakeCamera();
+        players = GameObject.FindGameObjectsWithTag("Player");
+        int playerCount = players.Length;
+        if (_playerText != null)
+        {
+            _playerText.text = "残り：" + $"{ playerCount - 1}人";
+        }
 
         // やられたのが自分だったら自分を消す、周りのプレイヤーを表示する
         if (killedPlayerActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
         {
-            players = GameObject.FindGameObjectsWithTag("Player");
             length = players.Length;
             Array.ForEach(players, p => p.GetComponent<PlayerController>().PlayerView.Show());
             GameObject me = players.Where(x => x.GetPhotonView().IsMine).FirstOrDefault();
