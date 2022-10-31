@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
             _deathTest = false;
         }
+
+        _playerText.text = "残り：" + $"{PhotonNetwork.CountOfPlayers}人";
     }
 
     void IOnEventCallback.OnEvent(EventData photonEvent)
@@ -83,7 +85,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         _cameraManager.ShakeCamera();
         players = GameObject.FindGameObjectsWithTag("Player");
-        int playerCount = players.Length;
+        int playerCount = PhotonNetwork.CountOfPlayersInRooms;
         if (_playerText != null)
         {
             _playerText.text = "残り：" + $"{ playerCount - 1}人";
@@ -92,7 +94,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         // やられたのが自分だったら自分を消す、周りのプレイヤーを表示する
         if (killedPlayerActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
         {
-            length = players.Length;
             Array.ForEach(players, p => p.GetComponent<PlayerController>().PlayerView.Show());
             GameObject me = players.Where(x => x.GetPhotonView().IsMine).FirstOrDefault();
             me.GetComponent<PlayerController>().Death();
@@ -100,7 +101,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             _uiManager?.PlayerDefeat();
         }
 
-        if (length <= 2)
+        if (playerCount <= 2)
         {
             Finish(GameObject.FindGameObjectWithTag("Player").GetPhotonView().OwnerActorNr);
         }
