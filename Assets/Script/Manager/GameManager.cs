@@ -4,6 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using System;
+using UnityEngine.UI;
 
 /// <summary>
 /// ゲームを管理するコンポーネント
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     private UIManager _uiManager;
     [SerializeField]
     private CameraManager _cameraManager;
+    [SerializeField]
+    private Text _playerText;
     [SerializeField] 
     private bool _deathTest = false;
 
@@ -43,6 +46,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public event Action OnPlayerDeath;
 
+    public int CountPlayer = 0;
+
+    private void Start()
+    {
+        CountPlayer = 0;
+    }
+
     private void Update()
     {
         if(_deathTest)
@@ -56,6 +66,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
             _deathTest = false;
         }
+
+        _playerText.text = "残り：" + $"{CountPlayer}人";
     }
 
     void IOnEventCallback.OnEvent(EventData photonEvent)
@@ -79,12 +91,17 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         print($"Player {photonEvent.Sender} killed Player {killedPlayerActorNumber}");
 
         _cameraManager.ShakeCamera();
+        players = GameObject.FindGameObjectsWithTag("Player");
+        int playerCount = PhotonNetwork.CountOfPlayersInRooms;
+        GameManager.Instance.CountPlayer--;
+        if (_playerText != null)
+        {
+            _playerText.text = "残り：" + $"{ playerCount - 1}人";
+        }
 
         // やられたのが自分だったら自分を消す、周りのプレイヤーを表示する
         if (killedPlayerActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
         {
-            players = GameObject.FindGameObjectsWithTag("Player");
-            length = players.Length;
             Array.ForEach(players, p => p.GetComponent<PlayerController>().PlayerView.Show());
             GameObject me = players.Where(x => x.GetPhotonView().IsMine).FirstOrDefault();
             me.GetComponent<PlayerController>().Death();
@@ -92,7 +109,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             _uiManager?.PlayerDefeat();
         }
 
-        if (length <= 2)
+        if (playerCount <= 2)
         {
             Finish(GameObject.FindGameObjectWithTag("Player").GetPhotonView().OwnerActorNr);
         }

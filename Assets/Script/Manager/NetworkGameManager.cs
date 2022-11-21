@@ -4,6 +4,7 @@ using UnityEngine;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime 用のクラスを継承する
 {
@@ -12,6 +13,8 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     string _playerPrefabName = "Prefab";
     /// <summary>プレイヤーを生成する場所を示すアンカーのオブジェクト</summary>
     [SerializeField] Transform[] _spawnPositions = default;
+    [SerializeField]
+    private Text _playerText;
 
     private IPunPrefabPool _punPool;
 
@@ -36,7 +39,6 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     public void ReConnect()
     {
         PhotonNetwork.LeaveRoom();
-        //PhotonNetwork.Destroy(_player);
         Init();
     }
 
@@ -216,6 +218,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log("OnPlayerEnteredRoom: " + newPlayer.NickName);
+        Debug.Log(PhotonNetwork.CountOfPlayersInRooms);
     }
 
     /// <summary>自分のいる部屋から他のプレイヤーが退室した時</summary>
@@ -246,6 +249,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks // Photon Realtime �
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
         Debug.Log("OnRoomPropertiesUpdate");
+        _playerText.text = "残り：" + $"{PhotonNetwork.CountOfPlayers}人";
     }
 
     /// <summary>プレイヤープロパティが更新された時</summary>
