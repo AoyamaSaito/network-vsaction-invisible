@@ -46,6 +46,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public event Action OnPlayerDeath;
 
+    public int CountPlayer = 0;
+
+    private void Start()
+    {
+        CountPlayer = 0;
+    }
+
     private void Update()
     {
         if(_deathTest)
@@ -60,7 +67,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             _deathTest = false;
         }
 
-        _playerText.text = "残り：" + $"{PhotonNetwork.CountOfPlayers}人";
+        _playerText.text = "残り：" + $"{CountPlayer}人";
     }
 
     void IOnEventCallback.OnEvent(EventData photonEvent)
@@ -86,6 +93,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         _cameraManager.ShakeCamera();
         players = GameObject.FindGameObjectsWithTag("Player");
         int playerCount = PhotonNetwork.CountOfPlayersInRooms;
+        GameManager.Instance.CountPlayer--;
         if (_playerText != null)
         {
             _playerText.text = "残り：" + $"{ playerCount - 1}人";

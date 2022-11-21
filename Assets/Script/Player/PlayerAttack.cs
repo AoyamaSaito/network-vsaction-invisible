@@ -37,6 +37,8 @@ public class PlayerAttack : MonoBehaviour
     private void Start()
     {
         Init();
+
+        GameManager.Instance.CountPlayer++;
     }
 
     private void Init()
