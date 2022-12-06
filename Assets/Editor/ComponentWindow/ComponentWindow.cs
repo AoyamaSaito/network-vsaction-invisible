@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 特定のコンポーネントを一覧表示するWindow
 /// </summary>
-/// <typeparam name="T"></typeparam>
+/// <typeparam name="T">表示したいクラスを指定する</typeparam>
 public abstract class ComponentWindow<T> : EditorWindow where T : Component
 {
     private Vector2 _dataScrollPosition;
