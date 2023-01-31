@@ -1,24 +1,35 @@
-
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Amazon;
 using Amazon.CognitoIdentityProvider;
 using Amazon.CognitoIdentityProvider.Model;
 
 public class Confirmation : MonoBehaviour
 {
+
     public InputField emailField;
     public InputField confirmationCodeField;
-    static string appClientId = AWSCognitoIDs.AppClientId;
+    static string clientId = AWSCognitoIDs.AppClientId;
+
+    void Start()
+    {
+    }
+
+    void Update()
+    {
+    }
 
     public void OnClick()
     {
-        var client = new AmazonCognitoIdentityProviderClient(null, Amazon.RegionEndpoint.APNortheast1);
+        var client = new AmazonCognitoIdentityProviderClient(null, RegionEndpoint.USWest2);
         ConfirmSignUpRequest confirmSignUpRequest = new ConfirmSignUpRequest();
 
         confirmSignUpRequest.Username = emailField.text;
         confirmSignUpRequest.ConfirmationCode = confirmationCodeField.text;
-        confirmSignUpRequest.ClientId = appClientId;
+        confirmSignUpRequest.ClientId = clientId;
 
         try
         {
@@ -27,7 +38,7 @@ public class Confirmation : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogError(ex);
+            Debug.Log(ex);
         }
     }
 }

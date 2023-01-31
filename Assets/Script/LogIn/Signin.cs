@@ -1,42 +1,45 @@
-
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Amazon.CognitoIdentityProvider; // for AmazonCognitoIdentityProviderClient
-using Amazon.Extensions.CognitoAuthentication; // for CognitoUserPool
-using Amazon; // for RegionEndpoint
+using Amazon;
+using Amazon.Runtime;
+using Amazon.CognitoIdentityProvider;
+using Amazon.Extensions.CognitoAuthentication;
 
 public class Signin : MonoBehaviour
 {
+
     public InputField emailField;
     public InputField passwordField;
-    public Text resultText;
-    static string appClientId = AWSCognitoIDs.AppClientId;
+    static string clientId = AWSCognitoIDs.AppClientId;
     static string userPoolId = AWSCognitoIDs.UserPoolId;
 
     public void OnClick()
     {
+        Debug.Log("Start Signin");
         try
         {
             AuthenticateWithSrpAsync();
         }
         catch (Exception ex)
         {
-            Debug.LogError(ex);
+            Debug.Log(ex);
         }
     }
 
     public async void AuthenticateWithSrpAsync()
     {
-        var provider = new AmazonCognitoIdentityProviderClient(null, RegionEndpoint.APNortheast1);
+        var provider = new AmazonCognitoIdentityProviderClient(null, RegionEndpoint.USWest2);
         CognitoUserPool userPool = new CognitoUserPool(
             userPoolId,
-            appClientId,
+            clientId,
             provider
         );
         CognitoUser user = new CognitoUser(
             emailField.text,
-            appClientId,
+            clientId,
             userPool,
             provider
         );
@@ -44,9 +47,8 @@ public class Signin : MonoBehaviour
         AuthFlowResponse context = await user.StartWithSrpAuthAsync(new InitiateSrpAuthRequest()
         {
             Password = passwordField.text
-        }).ConfigureAwait(true);
+        }).ConfigureAwait(false);
 
-        // for debug
-        resultText.text = user.SessionTokens.IdToken;
+        Debug.Log(user.SessionTokens.IdToken);
     }
 }

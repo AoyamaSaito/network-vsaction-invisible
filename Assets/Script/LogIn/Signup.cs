@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,28 +9,28 @@ public class Signup : MonoBehaviour
 {
     public InputField emailField;
     public InputField passwordField;
-    static string appClientId = AWSCognitoIDs.AppClientId;
 
     public void OnClick()
     {
         var client = new AmazonCognitoIdentityProviderClient(null, Amazon.RegionEndpoint.APNortheast1);
-        var sr = new SignUpRequest();
-        string email = emailField.text;
-        string password = passwordField.text;
-
-        sr.ClientId = appClientId;
-        sr.Username = email;
-        sr.Password = password;
-        sr.UserAttributes = new List<AttributeType> {
-            new AttributeType {
-                Name = "email",
-                Value = email
+        var sr = new SignUpRequest
+        {
+            ClientId = AWSCognitoIDs.AppClientId,
+            Username = emailField.text,
+            Password = passwordField.text,
+            UserAttributes = new List<AttributeType>
+            {
+                new AttributeType
+                {
+                    Name = "email",
+                    Value = emailField.text
+                }
             }
         };
 
         try
         {
-            SignUpResponse result = client.SignUp(sr);
+            var result = client.SignUp(sr);
             Debug.Log(result);
         }
         catch (Exception ex)
