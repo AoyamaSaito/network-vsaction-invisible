@@ -10,21 +10,13 @@ using Amazon.CognitoIdentityProvider.Model;
 public class Confirmation : MonoBehaviour
 {
 
-    public InputField emailField;
-    public InputField confirmationCodeField;
+    [SerializeField] InputField emailField;
+    [SerializeField] InputField confirmationCodeField;
     static string clientId = AWSCognitoIDs.AppClientId;
-
-    void Start()
-    {
-    }
-
-    void Update()
-    {
-    }
 
     public void OnClick()
     {
-        var client = new AmazonCognitoIdentityProviderClient(null, RegionEndpoint.USWest2);
+        var client = new AmazonCognitoIdentityProviderClient(null, RegionEndpoint.APNortheast1);
         ConfirmSignUpRequest confirmSignUpRequest = new ConfirmSignUpRequest();
 
         confirmSignUpRequest.Username = emailField.text;
