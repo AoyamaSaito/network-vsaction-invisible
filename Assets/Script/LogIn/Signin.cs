@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using Amazon;
@@ -10,18 +12,21 @@ using Amazon.Extensions.CognitoAuthentication;
 
 public class Signin : MonoBehaviour
 {
-
-    public InputField emailField;
-    public InputField passwordField;
+    [SerializeField] InputField emailField;
+    [SerializeField] InputField passwordField;
+    [SerializeField] InputField tokenField;
     static string clientId = AWSCognitoIDs.AppClientId;
     static string userPoolId = AWSCognitoIDs.UserPoolId;
 
     public void OnClick()
     {
         Debug.Log("Start Signin");
+
         try
         {
-            AuthenticateWithSrpAsync();
+            CallAuthenticateTask();
+            Debug.Log("ƒTƒCƒ“ƒCƒ“¬Œ÷");
+            Debug.Log("GET REQUEST‚ÉJWT‚ðŽ©“®“ü—Í");
         }
         catch (Exception ex)
         {
@@ -29,9 +34,18 @@ public class Signin : MonoBehaviour
         }
     }
 
-    public async void AuthenticateWithSrpAsync()
+    private async void CallAuthenticateTask()
     {
-        var provider = new AmazonCognitoIdentityProviderClient(null, RegionEndpoint.USWest2);
+        var context = SynchronizationContext.Current;
+        AuthFlowResponse response = await AuthenticateWithSrpAsync();
+        context.Post((state) => {
+            tokenField.text = response.AuthenticationResult.IdToken;
+        }, null);
+    }
+
+    private async Task<AuthFlowResponse> AuthenticateWithSrpAsync()
+    {
+        var provider = new AmazonCognitoIdentityProviderClient(null, RegionEndpoint.APNortheast1);
         CognitoUserPool userPool = new CognitoUserPool(
             userPoolId,
             clientId,
@@ -44,11 +58,9 @@ public class Signin : MonoBehaviour
             provider
         );
 
-        AuthFlowResponse context = await user.StartWithSrpAuthAsync(new InitiateSrpAuthRequest()
+        return await user.StartWithSrpAuthAsync(new InitiateSrpAuthRequest()
         {
             Password = passwordField.text
         }).ConfigureAwait(false);
-
-        Debug.Log(user.SessionTokens.IdToken);
     }
 }

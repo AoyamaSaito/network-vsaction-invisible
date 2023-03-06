@@ -7,8 +7,8 @@ using Amazon.CognitoIdentityProvider.Model; // for SignUpRequest
 
 public class Signup : MonoBehaviour
 {
-    public InputField emailField;
-    public InputField passwordField;
+    [SerializeField] InputField emailField;
+    [SerializeField] InputField passwordField;
 
     public void OnClick()
     {
