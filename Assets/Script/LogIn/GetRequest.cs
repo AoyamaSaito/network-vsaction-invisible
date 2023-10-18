@@ -19,7 +19,6 @@ public class GetRequest : MonoBehaviour
 
     IEnumerator GetText()
     {
-        Debug.Log(tokenField);
         Debug.Log(tokenField.text);
         string token = tokenField.text; // UserPools‚©‚çŽæ“¾‚µ‚½IdToken
         UnityWebRequest www = UnityWebRequest.Get(url);
